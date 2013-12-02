@@ -8,34 +8,29 @@ import de.tuberlin.uebb.jbop.benchmark.IBenchmarkFactory;
 import de.tuberlin.uebb.jbop.benchmark.SimpleOptimizer;
 import de.tuberlin.uebb.jbop.optimizer.IOptimizer;
 import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
-import de.tuberlin.uebb.jbop.optimizer.var.FinalFieldInliner;
+import de.tuberlin.uebb.jbop.optimizer.loop.ForLoopUnroller;
 
-public class SimpleFieldInlinerBenchmark extends AbstractBenchmark {
-  
-  private final Chain chain;
-  
-  SimpleFieldInlinerBenchmark(final Chain chain) {
-    super();
-    this.chain = chain;
-  }
+public class SimpleLoopBenchmark extends AbstractBenchmark {
   
   @Override
   public double run() {
-    return chain.chain.chain.chain.doubleField;
+    double d = 1.0;
+    for (int i = 0; i < 100; ++i) {
+      d += d;
+    }
+    return d;
   }
   
   public static final class Factory implements IBenchmarkFactory {
     
     @Override
     public IBenchmark create() {
-      return new SimpleFieldInlinerBenchmark(new Chain(null, new Chain(null, new Chain(null, new Chain(new double[] {
-        1.0
-      }, null)))));
+      return new SimpleLoopBenchmark();
     }
     
     @Override
     public IOptimizerSuite getOptimizer() {
-      return new SimpleOptimizer(Arrays.<IOptimizer> asList(new FinalFieldInliner()));
+      return new SimpleOptimizer(Arrays.<IOptimizer> asList(new ForLoopUnroller()));
     }
   }
 }

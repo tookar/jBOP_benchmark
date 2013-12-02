@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import de.tuberlin.uebb.jbop.benchmark.AbstractBenchmark;
 import de.tuberlin.uebb.jbop.benchmark.IBenchmark;
 import de.tuberlin.uebb.jbop.benchmark.IBenchmarkFactory;
+import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
+import de.tuberlin.uebb.jbop.optimizer.Optimizer;
 import de.tuberlin.uebb.jbop.optimizer.annotations.ImmutableArray;
 import de.tuberlin.uebb.jbop.optimizer.annotations.Optimizable;
 import de.tuberlin.uebb.jbop.optimizer.annotations.StrictLoops;
@@ -48,7 +50,7 @@ public class ComplexBenchmark extends AbstractBenchmark {
     
     final Chain chain = new Chain(new double[] {
         1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0,//
-    });
+    }, null);
     final double[][] doubleArray = new double[][] {
         {
             11.0, 12.0, 13.0, 14.0, 10.0, 16.0, 17.0, 18.0, 19.0, 20.0,//
@@ -60,6 +62,11 @@ public class ComplexBenchmark extends AbstractBenchmark {
     @Override
     public IBenchmark create() {
       return new ComplexBenchmark(chain, doubleArray);
+    }
+    
+    @Override
+    public IOptimizerSuite getOptimizer() {
+      return new Optimizer();
     }
   }
 }

@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 import de.tuberlin.uebb.jbop.benchmark.classes.SimpleFieldInlinerBenchmark;
 import de.tuberlin.uebb.jbop.exception.JBOPClassException;
-import de.tuberlin.uebb.jbop.optimizer.Optimizer;
 
 public class BenchmarkRunner {
   
@@ -42,7 +41,7 @@ public class BenchmarkRunner {
     final long endCreate = bean.getCurrentThreadCpuTime();
     
     final long startOptimize = bean.getCurrentThreadCpuTime();
-    final IBenchmark optimizedExample = new Optimizer().optimize(example, "__optimized");
+    final IBenchmark optimizedExample = factory.getOptimizer().optimize(example, "_Benchmark");
     final long endOptimize = bean.getCurrentThreadCpuTime();
     
     final long timeCreate = endCreate - startCreate;

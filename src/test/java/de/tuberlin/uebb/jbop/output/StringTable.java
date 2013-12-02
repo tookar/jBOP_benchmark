@@ -1,4 +1,4 @@
-package de.tuberlin.uebb.jbop.benchmark;
+package de.tuberlin.uebb.jbop.output;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

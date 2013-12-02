@@ -1,5 +1,8 @@
 package de.tuberlin.uebb.jbop.benchmark;
 
+import de.tuberlin.uebb.jbop.output.StringTable;
+import de.tuberlin.uebb.jbop.output.TableToAbstractPlot;
+
 public class BenchmarkResult {
   
   private final StringTable tableRun = new StringTable();

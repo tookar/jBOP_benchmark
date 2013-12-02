@@ -1,4 +1,4 @@
-package de.tuberlin.uebb.jbop.benchmark;
+package de.tuberlin.uebb.jbop.output;
 
 public abstract class AbstractPlot {
   

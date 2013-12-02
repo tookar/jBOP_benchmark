@@ -1,4 +1,4 @@
-package de.tuberlin.uebb.jbop.benchmark;
+package de.tuberlin.uebb.jbop.output;
 
 import org.apache.commons.collections15.Transformer;
 import org.apache.commons.lang3.tuple.Pair;
