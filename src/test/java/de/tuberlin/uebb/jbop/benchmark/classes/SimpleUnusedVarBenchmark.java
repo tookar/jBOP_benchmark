@@ -12,6 +12,7 @@ import de.tuberlin.uebb.jbop.optimizer.var.RemoveUnusedLocalVars;
 
 public class SimpleUnusedVarBenchmark extends AbstractBenchmark {
   
+  @SuppressWarnings("unused")
   @Override
   public double run() {
     final double local1 = 1.0;
