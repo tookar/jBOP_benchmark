@@ -174,7 +174,8 @@ public class StringTable {
   }
   
   public static StringTable merge(final StringTable one, final StringTable two) {
-    Validate.isTrue(one.getSize().getRight() == two.getSize().getRight());
+    
+    Validate.isTrue(one.getSize().getRight().intValue() == two.getSize().getRight().intValue());
     Validate.isTrue(StringUtils.equals(one.columns.get(0).getHeader(), two.columns.get(0).getHeader()));
     Validate.isTrue(StringUtils.equals(one.columns.get(0).getFormat(), two.columns.get(0).getFormat()));
     
