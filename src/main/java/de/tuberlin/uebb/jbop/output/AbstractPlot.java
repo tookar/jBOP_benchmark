@@ -22,7 +22,7 @@ public abstract class AbstractPlot {
   protected String getPrefix(final String xLabel, final String yLabel) {
     final StringBuilder builder = new StringBuilder();
     builder.append("\\begin{tikzpicture}\n");
-    builder.append("\\begin{axis}[xLabel={").append(xLabel).append("},yLabel={").append(yLabel).append("}]");
+    builder.append("\\begin{axis}[xLabel={").append(xLabel).append("},yLabel={").append(yLabel).append("}]\n");
     return builder.toString();
   }
   

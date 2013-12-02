@@ -30,9 +30,6 @@ public class MultiPlot extends AbstractPlot {
     for (int i = 0; i < plots.size(); i++) {
       final AbstractPlot plot = plots.get(i);
       builder.append(plot.getPlot());
-      if (i < (plots.size() - 1)) {
-        builder.append("\n");
-      }
     }
     return builder.toString();
   }
