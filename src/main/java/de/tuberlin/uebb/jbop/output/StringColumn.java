@@ -12,6 +12,9 @@ public class StringColumn {
     this.header = header;
     this.format = format;
     size = String.format(Locale.GERMAN, format, getObject(format)).length();
+    if (size == 0) {
+      throw new IllegalArgumentException("No column width specified in formatstring.");
+    }
   }
   
   private static Object getObject(final String format) {
@@ -41,9 +44,6 @@ public class StringColumn {
       return 0f;
     }
     if ("a".equals(conversion) || "A".equals(conversion)) {
-      return 0f;
-    }
-    if ("t".equals(conversion) || "T".equals(conversion)) {
       return 0f;
     }
     return "";
