@@ -6,7 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import de.tuberlin.uebb.jbop.benchmark.classes.ComplexBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleArithmeticBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleArrayLengthBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleArrayvalueBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleConstantIfBenchmark;
 import de.tuberlin.uebb.jbop.benchmark.classes.SimpleFieldInlinerBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleLocalVarBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleLoopBenchmark;
+import de.tuberlin.uebb.jbop.benchmark.classes.SimpleUnusedVarBenchmark;
 import de.tuberlin.uebb.jbop.exception.JBOPClassException;
 
 public class MultiBenchmarkRunner {
@@ -34,7 +42,15 @@ public class MultiBenchmarkRunner {
   
   public static void main(final String[] args) {
     final MultiBenchmarkRunner multiBenchmarkRunner = new MultiBenchmarkRunner();
+    multiBenchmarkRunner.addBenchmark(new SimpleArithmeticBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleArrayLengthBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleArrayvalueBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleConstantIfBenchmark.Factory());
     multiBenchmarkRunner.addBenchmark(new SimpleFieldInlinerBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleLocalVarBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleLoopBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new SimpleUnusedVarBenchmark.Factory());
+    multiBenchmarkRunner.addBenchmark(new ComplexBenchmark.Factory());
     final MultiBenchmarkResult result = multiBenchmarkRunner.run();
     if (result.hasErrors()) {
       System.err.println("There were errors: ");
