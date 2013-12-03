@@ -55,6 +55,7 @@ public class BenchmarkResult {
     final TableToAbstractPlot transformer = new TableToAbstractPlot();
     final StringTable merged = StringTable.merge(tableCreate, tableTotal);
     merged.setLabel(factory.getLabel() + ".merged");
+    merged.setShortCaption(factory.getCaption());
     merged.setCaption(factory.getCaption()
         + ". Hier ist die reine Instanziierungs- (create) / Optimierungszeit (optimize) sowie das Verhältnis von " + //
         "Optimierung zu normaler Instanziierung ($r_{create}$) und " +            //
