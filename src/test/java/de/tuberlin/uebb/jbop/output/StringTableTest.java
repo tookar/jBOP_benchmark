@@ -47,8 +47,8 @@ public class StringTableTest {
         "|               s |               1 |     1,000000000 |\n" + //
         "+-----------------+-----------------+-----------------+\n"   //
     , string);
-    assertEquals("\\begin{table}\n" + "\\scriptsize\n" + "  \\label{tab:Ueberschrift}\n"
-        + "  \\caption{Ueberschrift}\n" + "\\begin{tabular}{rrr}\n" + "\\hline\n"
+    assertEquals("\\begin{table}\n" + "\\scriptsize\n" + "\\label{tab:Ueberschrift}\n" + "\\caption{Ueberschrift}\n"
+        + "\\begin{tabular}{rrr}\n" + "\\hline\n"
         + "\\multicolumn{1}{c}{string}&\\multicolumn{1}{c}{int}&\\multicolumn{1}{c}{double}\\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
@@ -94,8 +94,8 @@ public class StringTableTest {
         "|               s |               1 |     1,000000000 |\n" + //
         "+-----------------+-----------------+-----------------+\n"   //
     , string);
-    assertEquals("\\begin{table}\n" + "\\scriptsize\n" + "  \\label{tab:Ueberschrift}\n"
-        + "  \\caption{Ueberschrift}\n" + "\\begin{tabular}{rrr}\n" + "\\hline\n"
+    assertEquals("\\begin{table}\n" + "\\scriptsize\n" + "\\label{tab:Ueberschrift}\n" + "\\caption{Ueberschrift}\n"
+        + "\\begin{tabular}{rrr}\n" + "\\hline\n"
         + "\\multicolumn{1}{c}{string}&\\multicolumn{1}{c}{int}&\\multicolumn{1}{c}{double}\\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"

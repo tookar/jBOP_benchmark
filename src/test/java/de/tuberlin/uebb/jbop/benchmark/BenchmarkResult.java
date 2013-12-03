@@ -19,8 +19,8 @@ public class BenchmarkResult {
     tableRun.addColumn("$r_{run}$", "%,15.9f");
     tableRun.setLabel(factory.getLabel() + ".run");
     tableRun.setCaption(factory.getCaption()
-        + ". Hier ist die reine Ausführungszeit sowie das Verhältnis von optimierter zu normaler Ausführungszeit " + //
-        "daregsetellt.");
+        + ". Hier ist die reine Ausführungszeit (run, $run_{opt}$) sowie das Verhältnis von optimierter zu normaler " + //
+        "Ausführungszeit ($r_{run}$) daregsetellt.");
     
     tableCreate.addColumn("durchlauf", "%,15d");
     tableCreate.addColumn("create", "%,15d");
@@ -28,29 +28,29 @@ public class BenchmarkResult {
     tableCreate.addColumn("$r_{create}$", "%,15.9f");
     tableCreate.setLabel(factory.getLabel() + ".create");
     tableCreate.setCaption(factory.getCaption()
-        + ". Hier ist die reine Instanziierungs- / Optimierungszeit sowie das Verhältnis von Optimierung zu " + //
-        "normaler Instanziierung daregsetellt.");
+        + ". Hier ist die reine Instanziierungs- (create) / Optimierungszeit (optimize) sowie das Verhältnis von " + //
+        "Optimierung zu normaler Instanziierung ($r_{create}$) daregsetellt.");
     
     tableTotal.addColumn("durchlauf", "%,15d");
     tableTotal.addColumn("total", "%,15d");
-    tableTotal.addColumn("totalOptimiert", "%,15d");
+    tableTotal.addColumn("totalOpt", "%,15d");
     tableTotal.addColumn("$r_{total}$", "%,15.9f");
     tableTotal.setLabel(factory.getLabel() + ".total");
     tableTotal.setCaption(factory.getCaption()
-        + ". Hier ist jeweils die komplette Zeit von Instanziierung + normale Ausführung, Optimierung + " + //
-        "optimiertzte Ausführungdie reine Instanziierungs- / Optimierungszeit sowie das entsprechende " +        //
-        "Verhältnis daregsetellt.");
+        + ". Hier ist jeweils die komplette Zeit von Instanziierung + normale Ausführung (total), Optimierung + " + //
+        "optimiertzte Ausführung (totalOpt) sowie das resultierende Verhältnis ($r_{total}$) daregsetellt.");
   }
   
   @Override
   public String toString() {
     final TableToAbstractPlot transformer = new TableToAbstractPlot();
     final StringTable merged = StringTable.merge(tableCreate, tableTotal);
-    tableTotal.setLabel(factory.getLabel() + ".merged");
-    tableTotal.setCaption(factory.getCaption()
-        + ". Hier ist jeweils die komplette Zeit von Instanziierung + normale Ausführung, Optimierung + " + //
-        "optimiertzte Ausführungdie reine Instanziierungs- / Optimierungszeit sowie das entsprechende " +        //
-        "Verhältnis daregsetellt.");
+    merged.setLabel(factory.getLabel() + ".merged");
+    merged.setCaption(factory.getCaption()
+        + ". Hier ist die reine Instanziierungs- (create) / Optimierungszeit (optimize) sowie das Verhältnis von " + //
+        "Optimierung zu normaler Instanziierung ($r_{create}$) und " +            //
+        "die komplette Zeit von Instanziierung + normale Ausführung (total), Optimierung + " + //
+        "optimiertzte Ausführung (totalOpt) sowie das resultierende Verhältnis ($r_{total}$) daregsetellt.");
     return tableRun.toString() + "\n\n" + transformer.transform(tableRun).getTikzPicture("time", "loops") + "\n\n" + //
         merged.toString() + "\n\n" + transformer.transform(tableTotal).getTikzPicture("time", "loops");
   }

@@ -32,6 +32,7 @@ public class BenchmarkRunner {
     for (int i = 0; i < 10; ++i) {
       durchlauf(result, bean, i);
     }
+    result.setLatex(true);
     return result;
   }
   

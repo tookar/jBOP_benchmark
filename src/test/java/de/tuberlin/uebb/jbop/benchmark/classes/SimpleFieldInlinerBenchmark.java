@@ -40,7 +40,7 @@ public class SimpleFieldInlinerBenchmark extends AbstractBenchmark {
     
     @Override
     public String getCaption() {
-      return "Mikro Benchmark des AFinalFieldInliners";
+      return "Mikro Benchmark des FinalFieldInliners";
     }
     
     @Override
