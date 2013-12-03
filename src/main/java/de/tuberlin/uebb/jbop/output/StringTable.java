@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2013 uebb.tu-berlin.de.
+ * 
+ * This file is part of JBOP (Java Bytecode OPtimizer).
+ * 
+ * JBOP is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * JBOP is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with JBOP. If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.tuberlin.uebb.jbop.output;
 
 import java.util.ArrayList;
@@ -12,12 +30,14 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class StringTable {
   
-  private final List<Object[]> rows = new LinkedList<>();
-  private boolean isLatex = false;
-  private final List<StringColumn> columns = new LinkedList<>();
-  
   private boolean isDebug = false;
   private boolean headerPrinted = false;
+  
+  private final List<StringColumn> columns = new LinkedList<>();
+  private final List<Object[]> rows = new LinkedList<>();
+  private String caption;
+  private boolean isLatex = false;
+  private int width = 1;
   
   public void setLatex(final boolean isLatex) {
     this.isLatex = isLatex;
@@ -29,6 +49,7 @@ public class StringTable {
   
   public void addColumn(final StringColumn column) {
     columns.add(column);
+    width += column.getSize() + 3;
   }
   
   public void addRow(final Object... rowData) {
@@ -39,7 +60,7 @@ public class StringTable {
       final StringBuilder buffer = new StringBuilder();
       if (!headerPrinted) {
         headerPrinted = true;
-        final String glheader = glheader(isLatex, columns);
+        final String glheader = glheader(isLatex, columns, getCaption(), getWidth());
         final String title = title(isLatex, columns);
         buffer.append(glheader).append("\n");
         buffer.append(title).append("\n");
@@ -52,10 +73,14 @@ public class StringTable {
     rows.add(rowData);
   }
   
+  private int getWidth() {
+    return width;
+  }
+  
   @Override
   public String toString() {
     final StringBuilder buffer = new StringBuilder();
-    final String glheader = glheader(isLatex, columns);
+    final String glheader = glheader(isLatex, columns, getCaption(), getWidth());
     final String line = line(isLatex, columns);
     final String title = title(isLatex, columns);
     final String format = format(isLatex, columns);
@@ -113,19 +138,26 @@ public class StringTable {
     return buffer.toString();
   }
   
-  private static String glheader(final boolean latex, final List<StringColumn> cols) {
+  private static String glheader(final boolean latex, final List<StringColumn> cols, final String caption,
+      final int width) {
     final StringBuilder buffer = new StringBuilder();
     if (!latex) {
-      return line(latex, cols);
+      buffer.append(StringUtils.center(caption, width)).append("\n").append(line(latex, cols));
+      return buffer.toString();
     }
-    buffer
-        .append(
-            "\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:t1}\n" + "  \\caption{t1}\n"
-                + "\\begin{tabular}{").//
+    buffer.append("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:").append(caption)
+        .append("}\n" + "  \\caption{").append(caption).append("}\n" + "\\begin{tabular}{").//
         append(StringUtils.repeat("r", cols.size())).//
         append("}\n\\hline");
     return buffer.toString();
     
+  }
+  
+  private String getCaption() {
+    if (caption == null) {
+      return "";
+    }
+    return caption;
   }
   
   private static String format(final boolean latex, final List<StringColumn> formats) {
@@ -197,5 +229,15 @@ public class StringTable {
     }
     merged.setLatex(one.isLatex);
     return merged;
+  }
+  
+  /**
+   * Sets the caption.
+   * 
+   * @param caption
+   *          the new caption
+   */
+  public void setCaption(final String caption) {
+    this.caption = caption;
   }
 }

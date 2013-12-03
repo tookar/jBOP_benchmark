@@ -31,11 +31,14 @@ public class StringTableTest {
     table.addRow(rowData);
     table.addRow(rowData);
     
+    table.setCaption("Ueberschrift");
+    
     final String string = table.toString();
     table.setLatex(true);
     final String string2 = table.toString();
     // ASSERT
     assertEquals("" +    //
+        "                     Ueberschrift                      \n" + //
         "+-----------------+-----------------+-----------------+\n" + //
         "|     string      |       int       |     double      |\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
@@ -44,8 +47,8 @@ public class StringTableTest {
         "|               s |               1 |     1,000000000 |\n" + //
         "+-----------------+-----------------+-----------------+\n"   //
     , string);
-    assertEquals("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:t1}\n" + "  \\caption{t1}\n"
-        + "\\begin{tabular}{rrr}\n" + "\\hline\n"
+    assertEquals("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:Ueberschrift}\n"
+        + "  \\caption{Ueberschrift}\n" + "\\begin{tabular}{rrr}\n" + "\\hline\n"
         + "\\multicolumn{1}{c}{string}&\\multicolumn{1}{c}{int}&\\multicolumn{1}{c}{double}\\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n" + "\\end{tabular}\\end{table}\n"
@@ -80,6 +83,7 @@ public class StringTableTest {
     final String string = byteArrayOutputStream.toString();
     // ASSERT
     assertEquals("" +    //
+        "                                                       \n" + //
         "+-----------------+-----------------+-----------------+\n" + //
         "|     string      |       int       |     double      |\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
