@@ -24,6 +24,7 @@ public class BenchmarkResult {
     tableRun.addColumn("$run_{opt}$", "%,15d");
     tableRun.addColumn("$r_{run}$", "%,15.9f");
     tableRun.setLabel(factory.getLabel() + ".run");
+    tableRun.setShortCaption(factory.getCaption());
     tableRun.setCaption(factory.getCaption()
         + ". Hier ist die reine Ausführungszeit (run, $run_{opt}$) sowie das Verhältnis von optimierter zu normaler " + //
         "Ausführungszeit ($r_{run}$) daregsetellt.");
@@ -33,6 +34,7 @@ public class BenchmarkResult {
     tableCreate.addColumn("optimize", "%,15d");
     tableCreate.addColumn("$r_{create}$", "%,15.9f");
     tableCreate.setLabel(factory.getLabel() + ".create");
+    tableCreate.setShortCaption(factory.getCaption());
     tableCreate.setCaption(factory.getCaption()
         + ". Hier ist die reine Instanziierungs- (create) / Optimierungszeit (optimize) sowie das Verhältnis von " + //
         "Optimierung zu normaler Instanziierung ($r_{create}$) daregsetellt.");
@@ -42,6 +44,7 @@ public class BenchmarkResult {
     tableTotal.addColumn("totalOpt", "%,15d");
     tableTotal.addColumn("$r_{total}$", "%,15.9f");
     tableTotal.setLabel(factory.getLabel() + ".total");
+    tableTotal.setShortCaption(factory.getCaption());
     tableTotal.setCaption(factory.getCaption()
         + ". Hier ist jeweils die komplette Zeit von Instanziierung + normale Ausführung (total), Optimierung + " + //
         "optimiertzte Ausführung (totalOpt) sowie das resultierende Verhältnis ($r_{total}$) daregsetellt.");
