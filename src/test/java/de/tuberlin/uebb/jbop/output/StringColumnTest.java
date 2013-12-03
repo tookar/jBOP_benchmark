@@ -31,17 +31,17 @@ public class StringColumnTest {
   }
   
   @Test
-  public void testGetSizeIllegal() {
-    // INIT
-    try {
-      StringColumn.of("header", "%s");
-    } catch (final IllegalArgumentException iae) {
-      assertEquals("No column width specified in formatstring.", iae.getMessage());
-    }
+  public void testGetWidthNotSpecified() {
+    // RUN + ASSERT
+    final StringColumn column = StringColumn.of("header", "%s");
+    
+    assertEquals(6, column.getWidth());
+    column.addToWidth(2);
+    assertEquals(8, column.getWidth());
   }
   
   @Test
-  public void testGetSize() {
+  public void testGetWidth() {
     final String[] formats = {
         "%15f", "%15d", "%15b", "%15c", "%15o", "%15x", "%15X", "%15e", "%15E", "%15g", "%15G", "%15a", "%15A",
     };
@@ -50,7 +50,7 @@ public class StringColumnTest {
       final StringColumn column = StringColumn.of("header", format);
       
       // RUN
-      final int size = column.getSize();
+      final int size = column.getWidth();
       
       // ASSERT
       assertEquals(15, size);

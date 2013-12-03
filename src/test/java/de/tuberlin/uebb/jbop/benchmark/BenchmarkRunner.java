@@ -26,7 +26,7 @@ public class BenchmarkRunner {
   }
   
   public BenchmarkResult benchmark() throws JBOPClassException {
-    final BenchmarkResult result = new BenchmarkResult();
+    final BenchmarkResult result = new BenchmarkResult(factory);
     final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
     
     for (int i = 0; i < 10; ++i) {

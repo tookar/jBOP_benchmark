@@ -50,7 +50,7 @@ public class StringTable {
   
   public void addColumn(final StringColumn column) {
     columns.add(column);
-    width += column.getSize() + 3;
+    width += column.getWidth() + 3;
   }
   
   public void addRow(final Object... rowData) {
@@ -71,6 +71,15 @@ public class StringTable {
       buffer.append(line);
       System.out.println(buffer.toString());
     }
+    for (int i = 0; i < columns.size(); i++) {
+      final StringColumn column = columns.get(i);
+      final int realLength = String.format(column.getFormat(), rowData[i]).length();
+      if (realLength > column.getWidth()) {
+        final int widthModifier = realLength - column.getWidth();
+        column.addToWidth(widthModifier);
+        width += widthModifier;
+      }
+    }
     rows.add(rowData);
   }
   
@@ -84,13 +93,13 @@ public class StringTable {
     final String glheader = glheader(isLatex, columns, getCaption(), getLabel(), getWidth());
     final String line = line(isLatex, columns);
     final String title = title(isLatex, columns);
-    final String format = format(isLatex, columns);
     final String glfooter = glfooter(isLatex, columns);
     buffer.append(glheader).append("\n");
     buffer.append(title).append("\n");
     buffer.append(line).append("\n");
     for (int i = 0; i < rows.size(); i++) {
       final Object[] row = rows.get(i);
+      final String format = format(isLatex, columns);
       buffer.append(String.format(Locale.GERMAN, format, row)).append("\n");
       if (i < (rows.size() - 1)) {
         buffer.append(line).append("\n");
@@ -117,7 +126,7 @@ public class StringTable {
           buffer.append("&");
         }
       } else {
-        buffer.append(" ").append(StringUtils.center(col.getHeader(), col.getSize())).append(" ");
+        buffer.append(" ").append(StringUtils.center(col.getHeader(), col.getWidth())).append(" ");
         buffer.append("|");
       }
     }
@@ -134,7 +143,7 @@ public class StringTable {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("+");
     for (final StringColumn col : cols) {
-      buffer.append(StringUtils.leftPad("", col.getSize() + 2, "-")).append("+");
+      buffer.append(StringUtils.leftPad("", col.getWidth() + 2, "-")).append("+");
     }
     return buffer.toString();
   }
@@ -146,7 +155,7 @@ public class StringTable {
       buffer.append(StringUtils.center(caption, width)).append("\n").append(line(latex, cols));
       return buffer.toString();
     }
-    buffer.append("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:").append(label)
+    buffer.append("\\begin{table}\n" + "\\scriptsize\n" + "  \\label{tab:").append(label)
         .append("}\n" + "  \\caption{").append(caption).append("}\n" + "\\begin{tabular}{").//
         append(StringUtils.repeat("r", cols.size())).//
         append("}\n\\hline");
@@ -160,7 +169,8 @@ public class StringTable {
       buffer.append("|");
     }
     for (int i = 0; i < formats.size(); i++) {
-      final String format = formats.get(i).getFormat();
+      final StringColumn stringColumn = formats.get(i);
+      final String format = stringColumn.getFormat();
       buffer.append(" ").append(format).append(" ");
       if (latex) {
         if (i < (formats.size() - 1)) {

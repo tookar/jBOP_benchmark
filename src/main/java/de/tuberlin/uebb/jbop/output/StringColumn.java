@@ -1,52 +1,33 @@
 package de.tuberlin.uebb.jbop.output;
 
-import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class StringColumn {
   
+  private static final String REGEX = "(\\D*)(\\d*)(.*(.))";
+  private static final Pattern PATTERN = Pattern.compile(REGEX);
+  
   private final String header;
-  private final String format;
-  private final int size;
+  private String format;
   
   public StringColumn(final String header, final String format) {
-    this.header = header;
     this.format = format;
-    size = String.format(Locale.GERMAN, format, getObject(format)).length();
-    if (size == 0) {
-      throw new IllegalArgumentException("No column width specified in formatstring.");
+    this.header = header;
+    final Matcher matcher = getMatcher();
+    final String group = matcher.group(2);
+    
+    final int width;
+    if (StringUtils.isBlank(group)) {
+      width = 0;
+    } else {
+      width = Integer.parseInt(group);
     }
-  }
-  
-  private static Object getObject(final String format) {
-    final String conversion = format.substring(format.length() - 1);
-    if ("f".equals(conversion)) {
-      return 0.0;
+    if (header.length() > width) {
+      this.format = matcher.group(1) + header.length() + matcher.group(3);
     }
-    if ("d".equals(conversion)) {
-      return 1;
-    }
-    if ("b".equals(conversion)) {
-      return false;
-    }
-    if ("c".equals(conversion)) {
-      return 'c';
-    }
-    if ("o".equals(conversion)) {
-      return 01;
-    }
-    if ("x".equals(conversion) || "X".equals(conversion)) {
-      return 0x1;
-    }
-    if ("e".equals(conversion) || "E".equals(conversion)) {
-      return 0f;
-    }
-    if ("g".equals(conversion) || "G".equals(conversion)) {
-      return 0f;
-    }
-    if ("a".equals(conversion) || "A".equals(conversion)) {
-      return 0f;
-    }
-    return "";
   }
   
   protected String getHeader() {
@@ -57,11 +38,23 @@ public class StringColumn {
     return format;
   }
   
-  protected int getSize() {
-    return size;
+  protected int getWidth() {
+    return Integer.parseInt(getMatcher().group(2));
   }
   
   public static StringColumn of(final String header, final String format) {
     return new StringColumn(header, format);
   }
+  
+  protected void addToWidth(final int modifier) {
+    final Matcher matcher = getMatcher();
+    format = matcher.group(1) + (getWidth() + modifier) + matcher.group(3);
+  }
+  
+  private Matcher getMatcher() {
+    final Matcher matcher = PATTERN.matcher(format);
+    matcher.matches();
+    return matcher;
+  }
+  
 }
