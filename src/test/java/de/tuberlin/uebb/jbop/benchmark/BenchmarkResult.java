@@ -84,7 +84,7 @@ public class BenchmarkResult {
   }
   
   public String getInclude() {
-    return "\\include{" + factory.getLabel() + "}";
+    return "\\input{" + factory.getLabel() + "}";
   }
   
   public void store(final File parent) throws IOException {
