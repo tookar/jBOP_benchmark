@@ -23,6 +23,6 @@ public class PlotTest {
     
     assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={xlabel},yLabel={ylabel}]\n"
         + "\\addplot coordinates {(0,0)(1,1)(2,2)};\n" + "\\legend{title}\\end{axis}\n" + "\\end{tikzpicture}\n"
-        + "\\label{fig:label}\n" + "\\caption{caption}\n" + "\\end{figure}", tikzPicture);
+        + "\\label{fig:label}\n" + "\\caption[caption]{caption}\n" + "\\end{figure}", tikzPicture);
   }
 }

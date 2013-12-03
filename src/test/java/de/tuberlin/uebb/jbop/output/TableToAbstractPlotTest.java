@@ -26,7 +26,7 @@ public class TableToAbstractPlotTest {
     // ASSERT
     assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={},yLabel={}]\n"
         + "\\addplot coordinates {(value,value)};\n" + "\\legend{Title}\\end{axis}\n" + "\\end{tikzpicture}\n"
-        + "\\label{fig:}\n" + "\\caption{}\n" + "\\end{figure}", plot.getTikzPicture("", ""));
+        + "\\label{fig:}\n" + "\\caption[]{}\n" + "\\end{figure}", plot.getTikzPicture("", ""));
   }
   
   @Test
@@ -45,7 +45,7 @@ public class TableToAbstractPlotTest {
     // ASSERT
     assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={},yLabel={}]\n"
         + "\\addplot coordinates {(value,value)};\n" + "\\addplot coordinates {(value,value)};\n"
-        + "\\legend{Title,Title}\\end{axis}\n" + "\\end{tikzpicture}\n" + "\\label{fig:}\n" + "\\caption{}\n"
+        + "\\legend{Title,Title}\\end{axis}\n" + "\\end{tikzpicture}\n" + "\\label{fig:}\n" + "\\caption[]{}\n"
         + "\\end{figure}", plot.getTikzPicture("", ""));
   }
 }

@@ -37,6 +37,7 @@ public class StringTable {
   private final List<StringColumn> columns = new LinkedList<>();
   private final List<Object[]> rows = new LinkedList<>();
   private String caption;
+  private String shortCaption;
   private String label;
   private boolean isLatex = false;
   private int width = 1;
@@ -62,7 +63,7 @@ public class StringTable {
       final StringBuilder buffer = new StringBuilder();
       if (!headerPrinted) {
         headerPrinted = true;
-        final String glheader = glheader(isLatex, columns, getCaption(), getLabel(), getWidth());
+        final String glheader = glheader(isLatex, columns, getCaption(), getShortCaption(), getLabel(), getWidth());
         final String title = title(isLatex, columns);
         buffer.append(glheader).append("\n");
         buffer.append(title).append("\n");
@@ -91,7 +92,7 @@ public class StringTable {
   @Override
   public String toString() {
     final StringBuilder buffer = new StringBuilder();
-    final String glheader = glheader(isLatex, columns, getCaption(), getLabel(), getWidth());
+    final String glheader = glheader(isLatex, columns, getCaption(), getShortCaption(), getLabel(), getWidth());
     final String line = line(isLatex, columns);
     final String title = title(isLatex, columns);
     final String glfooter = glfooter(isLatex, columns);
@@ -150,15 +151,15 @@ public class StringTable {
   }
   
   private static String glheader(final boolean latex, final List<StringColumn> cols, final String caption,
-      final String label, final int width) {
+      final String smallCaption, final String label, final int width) {
     final StringBuilder buffer = new StringBuilder();
     if (!latex) {
       
       buffer.append(WordUtils.wrap(caption, width)).append("\n").append(line(latex, cols));
       return buffer.toString();
     }
-    buffer.append("\\begin{table}\n" + "\\scriptsize\n" + "\\label{tab:").append(label).append("}\n" + "\\caption{")
-        .append(caption).append("}\n" + "\\begin{tabular}{").//
+    buffer.append("\\begin{table}\n" + "\\scriptsize\n" + "\\label{tab:").append(label).append("}\n" + "\\caption[")
+        .append(smallCaption).append("]{").append(caption).append("}\n" + "\\begin{tabular}{").//
         append(StringUtils.repeat("r", cols.size())).//
         append("}\n\\hline");
     return buffer.toString();
@@ -252,6 +253,23 @@ public class StringTable {
       return "";
     }
     return caption;
+  }
+  
+  /**
+   * Sets the caption.
+   * 
+   * @param caption
+   *          the new caption
+   */
+  public void setShortCaption(final String shortCaption) {
+    this.shortCaption = shortCaption;
+  }
+  
+  String getShortCaption() {
+    if (shortCaption == null) {
+      return getCaption();
+    }
+    return shortCaption;
   }
   
   /**

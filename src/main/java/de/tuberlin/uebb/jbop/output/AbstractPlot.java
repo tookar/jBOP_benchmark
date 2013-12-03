@@ -4,6 +4,7 @@ public abstract class AbstractPlot {
   
   private String caption;
   private String label;
+  private String shortCaption;
   
   public abstract String getTitle();
   
@@ -36,7 +37,7 @@ public abstract class AbstractPlot {
     builder.append("\\end{tikzpicture}\n");
     
     builder.append("\\label{fig:").append(getLabel()).append("}\n");
-    builder.append("\\caption{").append(getCaption()).append("}\n");
+    builder.append("\\caption[").append(getShortCaption()).append("]{").append(getCaption()).append("}\n");
     builder.append("\\end{figure}");
     return builder.toString();
   }
@@ -56,6 +57,23 @@ public abstract class AbstractPlot {
       return "";
     }
     return caption;
+  }
+  
+  /**
+   * Sets the caption.
+   * 
+   * @param caption
+   *          the new caption
+   */
+  public void setShortCaption(final String shortCaption) {
+    this.shortCaption = shortCaption;
+  }
+  
+  String getShortCaption() {
+    if (shortCaption == null) {
+      return getCaption();
+    }
+    return shortCaption;
   }
   
   /**
