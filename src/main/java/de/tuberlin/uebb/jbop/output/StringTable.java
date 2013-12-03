@@ -26,6 +26,7 @@ import java.util.Locale;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class StringTable {
@@ -152,7 +153,8 @@ public class StringTable {
       final String label, final int width) {
     final StringBuilder buffer = new StringBuilder();
     if (!latex) {
-      buffer.append(StringUtils.center(caption, width)).append("\n").append(line(latex, cols));
+      
+      buffer.append(WordUtils.wrap(caption, width)).append("\n").append(line(latex, cols));
       return buffer.toString();
     }
     buffer.append("\\begin{table}\n" + "\\scriptsize\n" + "  \\label{tab:").append(label)
@@ -268,4 +270,5 @@ public class StringTable {
     }
     return label;
   }
+  
 }

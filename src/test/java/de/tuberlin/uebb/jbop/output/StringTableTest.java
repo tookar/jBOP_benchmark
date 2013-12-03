@@ -38,7 +38,7 @@ public class StringTableTest {
     final String string2 = table.toString();
     // ASSERT
     assertEquals("" +    //
-        "                     Ueberschrift                      \n" + //
+        "Ueberschrift\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
         "|     string      |       int       |     double      |\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
@@ -85,7 +85,7 @@ public class StringTableTest {
     final String string2 = table.toString();
     // ASSERT
     assertEquals("" +    //
-        "                     Ueberschrift                      \n" + //
+        "Ueberschrift\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
         "|     string      |       int       |     double      |\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
@@ -129,8 +129,7 @@ public class StringTableTest {
     table.addRow(rowData);
     final String string = byteArrayOutputStream.toString();
     // ASSERT
-    assertEquals("" +    //
-        "                                                       \n" + //
+    assertEquals("\n" +    //
         "+-----------------+-----------------+-----------------+\n" + //
         "|     string      |       int       |     double      |\n" + //
         "+-----------------+-----------------+-----------------+\n" + //
@@ -260,8 +259,7 @@ public class StringTableTest {
     final String string = table.toString();
     
     // ASSERT
-    assertEquals("          \n" + "+--------+\n" + "| String |\n" + "+--------+\n" + "|    s   |\n" + "+--------+\n"
-        + "", string);
+    assertEquals("\n" + "+--------+\n" + "| String |\n" + "+--------+\n" + "|    s   |\n" + "+--------+\n" + "", string);
   }
   
   @Test
@@ -275,7 +273,23 @@ public class StringTableTest {
     final String string = table.toString();
     
     // ASSERT
-    assertEquals("               \n" + "+-------------+\n" + "|   String    |\n" + "+-------------+\n"
+    assertEquals("\n" + "+-------------+\n" + "|   String    |\n" + "+-------------+\n" + "| 12345678901 |\n"
+        + "+-------------+\n" + "", string);
+  }
+  
+  @Test
+  public void testLongCaption() {
+    // INIT
+    final StringTable table = new StringTable();
+    table.addColumn("String", "%10s");
+    table.addRow("12345678901");
+    table.setCaption("1234 5678 9012 3456");
+    
+    // RUN
+    final String string = table.toString();
+    
+    // ASSERT
+    assertEquals("1234 5678 9012\n" + "3456\n" + "+-------------+\n" + "|   String    |\n" + "+-------------+\n"
         + "| 12345678901 |\n" + "+-------------+\n" + "", string);
   }
 }
