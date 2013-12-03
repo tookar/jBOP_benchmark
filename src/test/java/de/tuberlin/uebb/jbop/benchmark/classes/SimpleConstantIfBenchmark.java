@@ -96,5 +96,15 @@ public class SimpleConstantIfBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new ConstantIfInliner(null)));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des ConstantIfInliners";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "constantifbenchmark";
+    }
   }
 }

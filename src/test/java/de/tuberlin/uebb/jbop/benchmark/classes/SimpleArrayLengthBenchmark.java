@@ -41,5 +41,15 @@ public class SimpleArrayLengthBenchmark extends AbstractBenchmark {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new FieldArrayLengthInliner()));
     }
     
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des FieldArrayLengthInliners";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "arraylengthbenchmark";
+    }
+    
   }
 }

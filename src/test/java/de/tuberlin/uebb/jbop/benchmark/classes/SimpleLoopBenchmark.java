@@ -32,5 +32,15 @@ public class SimpleLoopBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new ForLoopUnroller()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des ForLoopUnrollers";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "loopbenchmark";
+    }
   }
 }

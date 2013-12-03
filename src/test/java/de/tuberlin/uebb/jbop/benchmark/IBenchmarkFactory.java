@@ -7,4 +7,8 @@ public interface IBenchmarkFactory {
   IBenchmark create();
   
   IOptimizerSuite getOptimizer();
+  
+  String getCaption();
+  
+  String getLabel();
 }

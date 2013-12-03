@@ -37,5 +37,15 @@ public class SimpleFieldInlinerBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new FinalFieldInliner()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des AFinalFieldInliners";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "finalfieldbenchmark";
+    }
   }
 }

@@ -31,5 +31,15 @@ public class SimpleLocalVarBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new LocalVarInliner()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des LocalVarInliners";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "localvarbenchmark";
+    }
   }
 }

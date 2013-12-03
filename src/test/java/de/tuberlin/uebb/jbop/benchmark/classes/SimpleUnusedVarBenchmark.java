@@ -35,5 +35,15 @@ public class SimpleUnusedVarBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new RemoveUnusedLocalVars()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark von RemoveUnusedVars";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "unusedbenchmark";
+    }
   }
 }

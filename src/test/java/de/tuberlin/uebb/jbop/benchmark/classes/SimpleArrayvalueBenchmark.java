@@ -39,5 +39,15 @@ public class SimpleArrayvalueBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new FieldArrayValueInliner()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des FieldArrayValueInliners";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "arrayvaluebenchmark";
+    }
   }
 }

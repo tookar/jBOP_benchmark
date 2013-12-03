@@ -61,5 +61,16 @@ public class SimpleArithmeticBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new SimpleOptimizer(Arrays.<IOptimizer> asList(new ArithmeticExpressionInterpreter()));
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark des ArithmeticExressionInterpreters";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "arithmeticbenchmark";
+    }
+    
   }
 }

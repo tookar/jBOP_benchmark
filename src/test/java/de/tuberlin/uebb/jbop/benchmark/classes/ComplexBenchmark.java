@@ -68,5 +68,16 @@ public class ComplexBenchmark extends AbstractBenchmark {
     public IOptimizerSuite getOptimizer() {
       return new Optimizer();
     }
+    
+    @Override
+    public String getCaption() {
+      return "Mikro Benchmark eines komplexen Anwendungsfalls";
+    }
+    
+    @Override
+    public String getLabel() {
+      return "complexbenchmark";
+    }
+    
   }
 }
