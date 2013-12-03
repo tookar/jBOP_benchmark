@@ -16,7 +16,7 @@ public class TableToAbstractPlot implements Transformer<StringTable, AbstractPlo
     }
     plot.setLabel(input.getLabel());
     plot.setCaption(input.getCaption());
-    plot.setCaption(input.getShortCaption());
+    plot.setShortCaption(input.getShortCaption());
     return plot;
   }
   
