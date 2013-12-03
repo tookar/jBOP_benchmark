@@ -1,5 +1,10 @@
 package de.tuberlin.uebb.jbop.benchmark;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
 import de.tuberlin.uebb.jbop.output.StringTable;
 import de.tuberlin.uebb.jbop.output.TableToAbstractPlot;
 
@@ -9,6 +14,7 @@ public class BenchmarkResult {
   private final StringTable tableCreate = new StringTable();
   private final StringTable tableTotal = new StringTable();
   private final IBenchmarkFactory factory;
+  private boolean isLatex;
   
   public BenchmarkResult(final IBenchmarkFactory factory) {
     this.factory = factory;
@@ -71,8 +77,19 @@ public class BenchmarkResult {
   }
   
   public void setLatex(final boolean isLatex) {
+    this.isLatex = isLatex;
     tableRun.setLatex(isLatex);
     tableCreate.setLatex(isLatex);
     tableTotal.setLatex(isLatex);
+  }
+  
+  public String getInclude() {
+    return "\\include{" + factory.getLabel() + "}";
+  }
+  
+  public void store(final File parent) throws IOException {
+    final File file = new File(parent, factory.getLabel() + (isLatex ? ".tex" : ".txt"));
+    FileUtils.write(file, toString());
+    
   }
 }

@@ -16,9 +16,13 @@ public class BenchmarkRunner {
                                                                                            * ComplexBenchmark.Factory
                                                                                            * ()
                                                                                            */;
+    System.out.println(new BenchmarkRunner(factory).run());
+  }
+  
+  public BenchmarkResult run() throws JBOPClassException {
     final BenchmarkResult benchmark = new BenchmarkRunner(factory).benchmark();
     benchmark.setLatex(true);
-    System.out.println(benchmark);
+    return benchmark;
   }
   
   public BenchmarkRunner(final IBenchmarkFactory factory) {
