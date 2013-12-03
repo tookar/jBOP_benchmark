@@ -8,10 +8,15 @@ public class TableToAbstractPlot implements Transformer<StringTable, AbstractPlo
   @Override
   public AbstractPlot transform(final StringTable input) {
     final Pair<Integer, Integer> size = input.getSize();
+    final AbstractPlot plot;
     if (size.getLeft() == 2) {
-      return singlePlot(input, 1);
+      plot = singlePlot(input, 1);
+    } else {
+      plot = multiPlot(input);
     }
-    return multiPlot(input);
+    plot.setLabel(input.getLabel());
+    plot.setCaption(input.getCaption());
+    return plot;
   }
   
   private AbstractPlot multiPlot(final StringTable input) {

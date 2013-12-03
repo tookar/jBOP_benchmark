@@ -2,6 +2,9 @@ package de.tuberlin.uebb.jbop.output;
 
 public abstract class AbstractPlot {
   
+  private String caption;
+  private String label;
+  
   public abstract String getTitle();
   
   public abstract String getPlot();
@@ -21,6 +24,7 @@ public abstract class AbstractPlot {
   
   protected String getPrefix(final String xLabel, final String yLabel) {
     final StringBuilder builder = new StringBuilder();
+    builder.append("\\begin{figure}\n");
     builder.append("\\begin{tikzpicture}\n");
     builder.append("\\begin{axis}[xLabel={").append(xLabel).append("},yLabel={").append(yLabel).append("}]\n");
     return builder.toString();
@@ -29,7 +33,45 @@ public abstract class AbstractPlot {
   protected String getSuffix() {
     final StringBuilder builder = new StringBuilder();
     builder.append("\\end{axis}\n");
-    builder.append("\\end{tikzpicture}");
+    builder.append("\\end{tikzpicture}\n");
+    
+    builder.append("\\label{fig:").append(getLabel()).append("}\n");
+    builder.append("\\caption{").append(getCaption()).append("}\n");
+    builder.append("\\end{figure}");
     return builder.toString();
+  }
+  
+  /**
+   * Sets the caption.
+   * 
+   * @param caption
+   *          the new caption
+   */
+  public void setCaption(final String caption) {
+    this.caption = caption;
+  }
+  
+  private String getCaption() {
+    if (caption == null) {
+      return "";
+    }
+    return caption;
+  }
+  
+  /**
+   * Sets the label.
+   * 
+   * @param label
+   *          the new label
+   */
+  public void setLabel(final String label) {
+    this.label = label;
+  }
+  
+  private String getLabel() {
+    if (label == null) {
+      return getCaption();
+    }
+    return label;
   }
 }

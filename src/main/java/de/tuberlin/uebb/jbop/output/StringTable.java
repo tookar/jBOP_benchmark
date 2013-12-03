@@ -36,6 +36,7 @@ public class StringTable {
   private final List<StringColumn> columns = new LinkedList<>();
   private final List<Object[]> rows = new LinkedList<>();
   private String caption;
+  private String label;
   private boolean isLatex = false;
   private int width = 1;
   
@@ -60,7 +61,7 @@ public class StringTable {
       final StringBuilder buffer = new StringBuilder();
       if (!headerPrinted) {
         headerPrinted = true;
-        final String glheader = glheader(isLatex, columns, getCaption(), getWidth());
+        final String glheader = glheader(isLatex, columns, getCaption(), getLabel(), getWidth());
         final String title = title(isLatex, columns);
         buffer.append(glheader).append("\n");
         buffer.append(title).append("\n");
@@ -80,7 +81,7 @@ public class StringTable {
   @Override
   public String toString() {
     final StringBuilder buffer = new StringBuilder();
-    final String glheader = glheader(isLatex, columns, getCaption(), getWidth());
+    final String glheader = glheader(isLatex, columns, getCaption(), getLabel(), getWidth());
     final String line = line(isLatex, columns);
     final String title = title(isLatex, columns);
     final String format = format(isLatex, columns);
@@ -139,25 +140,18 @@ public class StringTable {
   }
   
   private static String glheader(final boolean latex, final List<StringColumn> cols, final String caption,
-      final int width) {
+      final String label, final int width) {
     final StringBuilder buffer = new StringBuilder();
     if (!latex) {
       buffer.append(StringUtils.center(caption, width)).append("\n").append(line(latex, cols));
       return buffer.toString();
     }
-    buffer.append("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:").append(caption)
+    buffer.append("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:").append(label)
         .append("}\n" + "  \\caption{").append(caption).append("}\n" + "\\begin{tabular}{").//
         append(StringUtils.repeat("r", cols.size())).//
         append("}\n\\hline");
     return buffer.toString();
     
-  }
-  
-  private String getCaption() {
-    if (caption == null) {
-      return "";
-    }
-    return caption;
   }
   
   private static String format(final boolean latex, final List<StringColumn> formats) {
@@ -184,7 +178,7 @@ public class StringTable {
   
   private static String glfooter(final boolean latex, final List<StringColumn> cols) {
     if (latex) {
-      return "\\hline\n\\end{tabular}\\end{table}";
+      return "\\hline\n\\end{tabular}\n\\end{table}";
     }
     return line(latex, cols);
   }
@@ -239,5 +233,29 @@ public class StringTable {
    */
   public void setCaption(final String caption) {
     this.caption = caption;
+  }
+  
+  String getCaption() {
+    if (caption == null) {
+      return "";
+    }
+    return caption;
+  }
+  
+  /**
+   * Sets the label.
+   * 
+   * @param label
+   *          the new label
+   */
+  public void setLabel(final String label) {
+    this.label = label;
+  }
+  
+  String getLabel() {
+    if (label == null) {
+      return getCaption();
+    }
+    return label;
   }
 }

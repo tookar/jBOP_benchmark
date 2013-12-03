@@ -51,8 +51,55 @@ public class StringTableTest {
         + "  \\caption{Ueberschrift}\n" + "\\begin{tabular}{rrr}\n" + "\\hline\n"
         + "\\multicolumn{1}{c}{string}&\\multicolumn{1}{c}{int}&\\multicolumn{1}{c}{double}\\\\\n" + "\\hline\n"
         + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
-        + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n" + "\\end{tabular}\\end{table}\n"
-        + "" //
+        + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
+        + "\\end{tabular}\n\\end{table}\n" + "" //
+    , string2);
+  }
+  
+  @Test
+  public void testDefaultWithLabel() {
+    // INIT
+    final Object[] rowData = {
+        "s", 1, 1.0
+    };
+    final String[] headers = {
+        "string", "int", "double"
+    };
+    final String[] formats = {
+        "%15s", "%15d", "%15.9f"
+    };
+    
+    // RUN
+    final StringTable table = new StringTable();
+    for (int i = 0; i < headers.length; ++i) {
+      table.addColumn(headers[i], formats[i]);
+    }
+    table.addRow(rowData);
+    table.addRow(rowData);
+    
+    table.setCaption("Ueberschrift");
+    table.setLabel("Ueberschrift");
+    
+    final String string = table.toString();
+    table.setLatex(true);
+    final String string2 = table.toString();
+    // ASSERT
+    assertEquals("" +    //
+        "                     Ueberschrift                      \n" + //
+        "+-----------------+-----------------+-----------------+\n" + //
+        "|     string      |       int       |     double      |\n" + //
+        "+-----------------+-----------------+-----------------+\n" + //
+        "|               s |               1 |     1,000000000 |\n" + //
+        "+-----------------+-----------------+-----------------+\n" + //
+        "|               s |               1 |     1,000000000 |\n" + //
+        "+-----------------+-----------------+-----------------+\n"   //
+    , string);
+    assertEquals("\\begin{table}\n" + "\\centering\n" + "\\scriptsize\n" + "  \\label{tab:Ueberschrift}\n"
+        + "  \\caption{Ueberschrift}\n" + "\\begin{tabular}{rrr}\n" + "\\hline\n"
+        + "\\multicolumn{1}{c}{string}&\\multicolumn{1}{c}{int}&\\multicolumn{1}{c}{double}\\\\\n" + "\\hline\n"
+        + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
+        + "               s &               1 &     1,000000000 \\\\\n" + "\\hline\n"
+        + "\\end{tabular}\n\\end{table}\n" + "" //
     , string2);
   }
   
