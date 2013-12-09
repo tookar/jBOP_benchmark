@@ -20,7 +20,6 @@ import de.tuberlin.uebb.jbop.exception.JBOPClassException;
 public class MultiBenchmarkRunner {
   
   private final List<IBenchmarkFactory> benchmarks = new ArrayList<>();
-  private File parent;
   
   public MultiBenchmarkResult run() {
     final MultiBenchmarkResult multiResult = new MultiBenchmarkResult();
