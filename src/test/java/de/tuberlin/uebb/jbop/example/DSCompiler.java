@@ -83,7 +83,6 @@ public class DSCompiler implements IDSCompiler {
   
   @Override
   @Optimizable
-  @StrictLoops
   public int getPartialDerivativeIndex(final int... orders) throws DimensionMismatchException,
       NumberIsTooLargeException {
     
