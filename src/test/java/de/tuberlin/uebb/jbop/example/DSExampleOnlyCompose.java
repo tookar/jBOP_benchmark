@@ -26,7 +26,7 @@ import org.junit.Test;
  * 
  * @author Christopher Ewest
  */
-public class DSExample {
+public class DSExampleOnlyCompose {
   
   /**
    * The main method.
@@ -36,7 +36,7 @@ public class DSExample {
    *          the arguments
    */
   public static void main(final String[] args) {
-    new DSExample().run();
+    new DSExampleOnlyCompose().run();
   }
   
   private final double x0 = 15.0;
@@ -48,34 +48,34 @@ public class DSExample {
   
   @SuppressWarnings("unused")
   public void createCompilers() {
-    new DerivativeStructure(3, 3, 0, 0);
+    new DerivativeStructureOnlyCompose(3, 3, 0, 0);
   }
   
-  private DerivativeStructure x;
-  private DerivativeStructure y;
-  private DerivativeStructure z;
+  private DerivativeStructureOnlyCompose x;
+  private DerivativeStructureOnlyCompose y;
+  private DerivativeStructureOnlyCompose z;
   
   @Test
-  public DerivativeStructure run() {
-    x = new DerivativeStructure(3, 3, 0, x0);
-    y = new DerivativeStructure(3, 3, 1, y0);
-    z = new DerivativeStructure(3, 3, 2, z0);
+  public DerivativeStructureOnlyCompose run() {
+    x = new DerivativeStructureOnlyCompose(3, 3, 0, x0);
+    y = new DerivativeStructureOnlyCompose(3, 3, 1, y0);
+    z = new DerivativeStructureOnlyCompose(3, 3, 2, z0);
     // ax²
-    final DerivativeStructure ax2 = x.pow(2).multiply(a);//
+    final DerivativeStructureOnlyCompose ax2 = x.pow(2).multiply(a);//
     // ay²
-    final DerivativeStructure ay2 = y.pow(2).multiply(a);//
+    final DerivativeStructureOnlyCompose ay2 = y.pow(2).multiply(a);//
     // az²
-    final DerivativeStructure az2 = z.pow(2).multiply(a);//
+    final DerivativeStructureOnlyCompose az2 = z.pow(2).multiply(a);//
     // + bx
-    final DerivativeStructure bx = x.multiply(b);
+    final DerivativeStructureOnlyCompose bx = x.multiply(b);
     // + by
-    final DerivativeStructure by = y.multiply(b);
+    final DerivativeStructureOnlyCompose by = y.multiply(b);
     // + bz
-    final DerivativeStructure bz = z.multiply(b);
+    final DerivativeStructureOnlyCompose bz = z.multiply(b);
     // +c
     
-    final DerivativeStructure multiply = ax2.multiply(ay2).multiply(az2);
-    final DerivativeStructure multiply2 = bx.multiply(by).multiply(bz);
+    final DerivativeStructureOnlyCompose multiply = ax2.multiply(ay2).multiply(az2);
+    final DerivativeStructureOnlyCompose multiply2 = bx.multiply(by).multiply(bz);
     
     return multiply.add(multiply2).add(c);
   }

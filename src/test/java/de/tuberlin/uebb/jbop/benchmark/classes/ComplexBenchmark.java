@@ -36,7 +36,7 @@ public class ComplexBenchmark extends AbstractBenchmark {
     }
     double res = 0;
     for (int i = 0; i < doubleArray.length; ++i) {
-      final double[] localDoubleArray = doubleArray[0];
+      final double[] localDoubleArray = doubleArray[i];
       for (int j = 0; j < localDoubleArray.length; ++j) {
         for (int k = 0; k < 8; ++k) {
           res += chain.chainArray[j] + localDoubleArray[j];

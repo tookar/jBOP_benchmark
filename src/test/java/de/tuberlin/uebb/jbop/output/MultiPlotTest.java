@@ -20,8 +20,12 @@ public class MultiPlotTest {
     final String tikzPicture = plot.getTikzPicture("xlabel", "ylabel");
     
     // ASSERT
-    assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={xlabel},yLabel={ylabel}]\n"
-        + "\\addplot coordinates {};\n" + "\\addplot coordinates {};\n" + "\\legend{plot1,plot2}\\end{axis}\n"
-        + "\\end{tikzpicture}\n" + "\\label{fig:}\n" + "\\caption[hallo]{}\n" + "\\end{figure}", tikzPicture);
+    assertEquals(
+        "\\begin{figure}\n"
+            + "\\begin{tikzpicture}\n"
+            + "\\begin{axis}[xlabel={xlabel},ylabel={ylabel},legend style={at={(1.8,.5)},anchor=east},height=.6\\textwidth,width=.6\\textwidth]\n"
+            + "\\addplot coordinates {};\n" + "\\addplot coordinates {};\n" + "\\legend{plot1,plot2}\n"
+            + "\\end{axis}\n" + "\\end{tikzpicture}\n" + "\\caption[hallo]{}\n" + "\\label{fig:}\n" + "\\end{figure}",
+        tikzPicture);
   }
 }

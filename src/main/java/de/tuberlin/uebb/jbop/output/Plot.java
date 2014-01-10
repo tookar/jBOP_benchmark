@@ -28,7 +28,8 @@ public class Plot extends AbstractPlot {
     final StringBuilder builder = new StringBuilder();
     builder.append("\\addplot coordinates {");
     for (final Pair<String, String> coordinate : coordinates) {
-      builder.append("(").append(coordinate.getLeft()).append(",").append(coordinate.getRight()).append(")");
+      // builder.append("(").append(coordinate.getLeft()).append(",").append(coordinate.getRight()).append(")");
+      builder.append("(").append(coordinate.getRight()).append(",").append(coordinate.getLeft()).append(")");
     }
     builder.append("};\n");
     return builder.toString();

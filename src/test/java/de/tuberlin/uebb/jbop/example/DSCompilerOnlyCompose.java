@@ -37,7 +37,7 @@ import de.tuberlin.uebb.jbop.optimizer.annotations.StrictLoops;
  * 
  * All the public api of this class was lifted to the interface {@link IDSCompiler}.
  */
-public class DSCompiler implements IDSCompiler {
+public class DSCompilerOnlyCompose implements IDSCompiler {
   
   /** Number of free parameters. */
   private final int parameters;
@@ -69,8 +69,9 @@ public class DSCompiler implements IDSCompiler {
    * public for simpler access via reflection.
    * Do not use as standalone.
    */
-  public DSCompiler(final int parameters, final int order, final int[][] sizes, final int[][] derivativesIndirection,
-      final int[] lowerIndirection, final int[][][] multIndirection, final int[][][] compIndirection) {
+  public DSCompilerOnlyCompose(final int parameters, final int order, final int[][] sizes,
+      final int[][] derivativesIndirection, final int[] lowerIndirection, final int[][][] multIndirection,
+      final int[][][] compIndirection) {
     this.parameters = parameters;
     this.order = order;
     this.sizes = sizes;
@@ -82,7 +83,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
   public int getPartialDerivativeIndex(final int... orders) throws DimensionMismatchException,
       NumberIsTooLargeException {
     
@@ -124,7 +124,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
   public int getFreeParameters() {
     return parameters;
   }
@@ -135,20 +134,16 @@ public class DSCompiler implements IDSCompiler {
    * @return derivation order
    */
   @Override
-  @Optimizable
   public int getOrder() {
     return order;
   }
   
   @Override
-  @Optimizable
   public int getSize() {
     return sizes[parameters][order];
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void linearCombination(final double a1, final double[] c1, final double a2, final double[] c2,
       final double[] result) {
     for (int i = 0; i < sizes[parameters][order]; ++i) {
@@ -157,8 +152,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void linearCombination(final double a1, final double[] c1, final double a2, final double[] c2,
       final double a3, final double[] c3, final double[] result) {
     for (int i = 0; i < sizes[parameters][order]; ++i) {
@@ -167,8 +160,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void linearCombination(final double a1, final double[] c1, final double a2, final double[] c2,
       final double a3, final double[] c3, final double a4, final double[] c4, final double[] result) {
     for (int i = 0; i < sizes[parameters][order]; ++i) {
@@ -177,8 +168,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void add(final double[] lhs, final double[] rhs, final double[] result) {
     for (int i = 0; i < sizes[parameters][order]; ++i) {
       result[i] = lhs[i] + rhs[i];
@@ -186,8 +175,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void subtract(final double[] lhs, final double[] rhs, final double[] result) {
     for (int i = 0; i < sizes[parameters][order]; ++i) {
       result[i] = lhs[i] - rhs[i];
@@ -195,8 +182,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void multiply(final double[] lhs, final double[] rhs, final double[] result) {
     for (int i = 0; i < multIndirection.length; ++i) {
       final int[][] mappingI = multIndirection[i];
@@ -209,8 +194,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void divide(final double[] lhs, final double[] rhs, final double[] result) {
     final double[] reciprocal = new double[sizes[parameters][order]];
     pow(rhs, -1, reciprocal);
@@ -218,8 +201,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void remainder(final double[] lhs, final double[] rhs, final double[] result) {
     
     // compute k such that lhs % rhs = lhs - k rhs
@@ -237,8 +218,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void pow(final double[] operand, final double p, final double[] result) {
     
     // create the function value and derivatives
@@ -262,8 +241,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void pow(final double[] operand, final int n, final double[] result) {
     
     if (n == 0) {
@@ -308,8 +285,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void pow(final double[] x, final double[] y, final double[] result) {
     final double[] logX = new double[sizes[parameters][order]];
     log(x, logX);
@@ -319,8 +294,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void rootN(final double[] operand, final int n, final double[] result) {
     
     // create the function value and derivatives
@@ -350,8 +323,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void exp(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -364,8 +335,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void expm1(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -379,8 +348,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void log(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -401,8 +368,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void log1p(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -423,8 +388,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void log10(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -445,8 +408,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void cos(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -465,8 +426,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void sin(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -485,8 +444,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void tan(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -533,8 +490,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void acos(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -584,8 +539,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void asin(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -635,8 +588,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void atan(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -686,8 +637,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void atan2(final double[] y, final double[] x, final double[] result) {
     
     // compute r = sqrt(x^2+y^2)
@@ -725,8 +674,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void cosh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -745,8 +692,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void sinh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -765,8 +710,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void tanh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -814,8 +757,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void acosh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -865,8 +806,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void asinh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -916,8 +855,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public void atanh(final double[] operand, final double[] result) {
     
     // create the function value and derivatives
@@ -986,8 +923,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
-  @StrictLoops
   public double taylor(final double[] ds, final double... delta) {
     double value = 0;
     for (int i = sizes[parameters][order] - 1; i >= 0; --i) {
@@ -1004,7 +939,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
   public void checkCompatibility(final IDSCompiler compiler) throws DimensionMismatchException {
     if (parameters != compiler.getFreeParameters()) {
       throw new DimensionMismatchException(parameters, compiler.getFreeParameters());
@@ -1015,19 +949,16 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
   public int[][] getSizes() {
     return sizes;
   }
   
   @Override
-  @Optimizable
   public int[][] getDerivativesIndirection() {
     return derivativesIndirection;
   }
   
   @Override
-  @Optimizable
   public int[] getLowerIndirection() {
     return lowerIndirection;
   }
@@ -1038,7 +969,6 @@ public class DSCompiler implements IDSCompiler {
   }
   
   @Override
-  @Optimizable
   public int[][][] getCompIndirection() {
     return compIndirection;
   }

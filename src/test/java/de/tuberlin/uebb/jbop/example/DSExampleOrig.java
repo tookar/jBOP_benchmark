@@ -18,7 +18,7 @@
  */
 package de.tuberlin.uebb.jbop.example;
 
-// import org.apache.commons.math3.analysis.differentiation.DerivativeStructure;
+import org.apache.commons.math3.analysis.differentiation.DerivativeStructure;
 import org.junit.Test;
 
 /**
@@ -26,7 +26,7 @@ import org.junit.Test;
  * 
  * @author Christopher Ewest
  */
-public class DSExample {
+public class DSExampleOrig {
   
   /**
    * The main method.
@@ -36,7 +36,7 @@ public class DSExample {
    *          the arguments
    */
   public static void main(final String[] args) {
-    new DSExample().run();
+    new DSExampleOrig().run();
   }
   
   private final double x0 = 15.0;
@@ -72,7 +72,6 @@ public class DSExample {
     final DerivativeStructure by = y.multiply(b);
     // + bz
     final DerivativeStructure bz = z.multiply(b);
-    // +c
     
     final DerivativeStructure multiply = ax2.multiply(ay2).multiply(az2);
     final DerivativeStructure multiply2 = bx.multiply(by).multiply(bz);

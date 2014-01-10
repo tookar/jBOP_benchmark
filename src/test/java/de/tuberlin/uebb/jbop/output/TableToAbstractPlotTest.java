@@ -24,9 +24,13 @@ public class TableToAbstractPlotTest {
     final AbstractPlot plot = transformer.transform(table);
     
     // ASSERT
-    assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={},yLabel={}]\n"
-        + "\\addplot coordinates {(value,value)};\n" + "\\legend{Title}\\end{axis}\n" + "\\end{tikzpicture}\n"
-        + "\\label{fig:}\n" + "\\caption[]{}\n" + "\\end{figure}", plot.getTikzPicture("", ""));
+    assertEquals(
+        "\\begin{figure}\n"
+            + "\\begin{tikzpicture}\n"
+            + "\\begin{axis}[xlabel={},ylabel={},legend style={at={(1.8,.5)},anchor=east},height=.6\\textwidth,width=.6\\textwidth]\n"
+            + "\\addplot coordinates {(value,value)};\n" + "\\legend{Title}\n" + "\\end{axis}\n"
+            + "\\end{tikzpicture}\n" + "\\caption[]{}\n" + "\\label{fig:}\n" + "\\end{figure}",
+        plot.getTikzPicture("", ""));
   }
   
   @Test
@@ -43,9 +47,12 @@ public class TableToAbstractPlotTest {
     final AbstractPlot plot = transformer.transform(table);
     
     // ASSERT
-    assertEquals("\\begin{figure}\n" + "\\begin{tikzpicture}\n" + "\\begin{axis}[xLabel={},yLabel={}]\n"
-        + "\\addplot coordinates {(value,value)};\n" + "\\addplot coordinates {(value,value)};\n"
-        + "\\legend{Title,Title}\\end{axis}\n" + "\\end{tikzpicture}\n" + "\\label{fig:}\n" + "\\caption[]{}\n"
-        + "\\end{figure}", plot.getTikzPicture("", ""));
+    assertEquals(
+        "\\begin{figure}\n"
+            + "\\begin{tikzpicture}\n"
+            + "\\begin{axis}[xlabel={},ylabel={},legend style={at={(1.8,.5)},anchor=east},height=.6\\textwidth,width=.6\\textwidth]\n"
+            + "\\addplot coordinates {(value,value)};\n" + "\\addplot coordinates {(value,value)};\n"
+            + "\\legend{Title,Title}\n" + "\\end{axis}\n" + "\\end{tikzpicture}\n" + "\\caption[]{}\n"
+            + "\\label{fig:}\n" + "\\end{figure}", plot.getTikzPicture("", ""));
   }
 }

@@ -9,7 +9,7 @@ import de.tuberlin.uebb.jbop.output.AbstractPlot;
 import de.tuberlin.uebb.jbop.output.StringTable;
 import de.tuberlin.uebb.jbop.output.TableToAbstractPlot;
 
-public class BenchmarkResult {
+public class BenchmarkResultDS {
   
   private static final String LABEL_RATIO = "Verhältnis";
   private static final String LABEL_TIME = "Zeit[ns]";
@@ -22,34 +22,40 @@ public class BenchmarkResult {
   private final IBenchmarkFactory factory;
   private boolean isLatex;
   
-  public BenchmarkResult(final IBenchmarkFactory factory) {
+  public BenchmarkResultDS(final IBenchmarkFactory factory) {
     this.factory = factory;
     tableRun.setDebug(true);
     tableRun.addColumn("Iterationen", "%,15d");
     tableRun.addColumn("Laufzeit", "%,15d");
-    tableRun.addColumn("Laufzeit optimiert", "%,15d");
+    tableRun.addColumn("Laufzeit optimiert(I)", "%,15d");
+    tableRun.addColumn("Laufzeit optimiert(II)", "%,15d");
     tableRun.setLabel(factory.getLabel() + ".run");
     tableRun.setShortCaption(factory.getCaption());
     tableRun.setCaption(factory.getCaption() + ": Laufzeit von normaler und optimierter Ausführung");
     
     tableCreate.addColumn("Iterationen", "%,15d");
     tableCreate.addColumn("Erzeugung", "%,15d");
-    tableCreate.addColumn("Optimierung", "%,15d");
+    tableCreate.addColumn("Optimierung(I)", "%,15d");
+    tableCreate.addColumn("Optimierung(II)", "%,15d");
     tableCreate.setLabel(factory.getLabel() + ".create");
     tableCreate.setShortCaption(factory.getCaption());
     tableCreate.setCaption(factory.getCaption() + ": Instanziierungs- und Optimierungszeit");
     
     tableTotal.addColumn("Iterationen", "%,15d");
     tableTotal.addColumn("Ausführungszeit", "%,15d");
-    tableTotal.addColumn("Ausführungszeit optimiert", "%,15d");
+    tableTotal.addColumn("Ausführungszeit optimiert(I)", "%,15d");
+    tableTotal.addColumn("Ausführungszeit optimiert(II)", "%,15d");
     tableTotal.setLabel(factory.getLabel() + ".total");
     tableTotal.setShortCaption(factory.getCaption());
     tableTotal.setCaption(factory.getCaption() + ": totale Laufzeit (erzeugung und Ausführung)");
     
     tableRatio.addColumn("Iterationen", "%,15d");
-    tableRatio.addColumn("Laufzeit", "%,15.9f");
-    tableRatio.addColumn("Erzeugung / Optimierung", "%,15.9f");
-    tableRatio.addColumn("Ausführung", "%,15.9f");
+    tableRatio.addColumn("Laufzeit(I)", "%,15.9f");
+    tableRatio.addColumn("Laufzeit(II)", "%,15.9f");
+    tableRatio.addColumn("Erzeugung / Optimierung(I)", "%,15.9f");
+    tableRatio.addColumn("Erzeugung / Optimierung(II)", "%,15.9f");
+    tableRatio.addColumn("Ausführung(I)", "%,15.9f");
+    tableRatio.addColumn("Ausführung(II)", "%,15.9f");
     tableRatio.setLabel(factory.getLabel() + ".ratio");
     tableRatio.setCaption(factory.getCaption() + ": Verhältnis");
   }
@@ -100,19 +106,23 @@ public class BenchmarkResult {
     return merged;
   }
   
-  public void addResults(final int durchlauf, final long timeCreate, final long timeOptimize, final long timeRunNormal,
-      final long timeRunOptimized) {
+  public void addResults(final int durchlauf, final long timeCreate, final long timeOptimize, final long timeOptOnly,
+      final long timeRunNormal, final long timeRunOptimized, final long timeRunOnly) {
     final long total = timeRunNormal + timeCreate;
     final long totalOpt = timeRunOptimized + timeOptimize;
+    final long totalOnly = timeRunOnly + timeOptOnly;
     
-    final double rateCreate = (double) timeOptimize / (double) timeCreate;
-    final double rateRun = (double) timeRunOptimized / (double) timeRunNormal;
-    final double rateTotal = (double) totalOpt / (double) total;
+    final double rateCreateI = (double) timeOptimize / (double) timeCreate;
+    final double rateRunI = (double) timeRunOptimized / (double) timeRunNormal;
+    final double rateTotalI = (double) totalOpt / (double) total;
+    final double rateCreateII = (double) timeOptOnly / (double) timeCreate;
+    final double rateRunII = (double) timeRunOnly / (double) timeRunNormal;
+    final double rateTotalII = (double) totalOnly / (double) total;
     final int iterationen = (int) Math.pow(10, durchlauf);
-    tableTotal.addRow(iterationen, total, totalOpt);
-    tableRun.addRow(iterationen, timeRunNormal, timeRunOptimized);
-    tableCreate.addRow(iterationen, timeCreate, timeOptimize);
-    tableRatio.addRow(iterationen, rateRun, rateCreate, rateTotal);
+    tableTotal.addRow(iterationen, total, totalOpt, totalOnly);
+    tableRun.addRow(iterationen, timeRunNormal, timeRunOptimized, timeRunOnly);
+    tableCreate.addRow(iterationen, timeCreate, timeOptimize, timeOptOnly);
+    tableRatio.addRow(iterationen, rateRunI, rateRunII, rateCreateI, rateCreateII, rateTotalI, rateTotalII);
   }
   
   public void setLatex(final boolean isLatex) {

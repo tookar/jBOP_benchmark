@@ -6,10 +6,10 @@
   <artifactId>jbop_benchmark</artifactId>
   <packaging>jar</packaging>
   <name>jBOP Benchmark</name>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <properties>
-    <jBOP.version>1.0.0-SNAPSHOT</jBOP.version>
+    <jBOP.version>1.0.0</jBOP.version>
     <!-- test dependencies -->
     <hamcrest.version>1.3</hamcrest.version>
     <mockito.version>1.9.5</mockito.version>

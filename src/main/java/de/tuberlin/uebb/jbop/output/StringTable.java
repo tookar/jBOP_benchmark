@@ -158,8 +158,10 @@ public class StringTable {
       buffer.append(WordUtils.wrap(caption, width)).append("\n").append(line(latex, cols));
       return buffer.toString();
     }
-    buffer.append("\\begin{table}\n" + "\\scriptsize\n" + "\\label{tab:").append(label).append("}\n" + "\\caption[")
-        .append(smallCaption).append("]{").append(caption).append("}\n" + "\\begin{tabular}{").//
+    buffer.append("\\begin{table}\n\\scriptsize\n").//
+        append("\\caption[").append(smallCaption).append("]{").append(caption).append("}\n").//
+        append("\\label{tab:").append(label).append("}\n").//
+        append("\\begin{tabular}{").//
         append(StringUtils.repeat("r", cols.size())).//
         append("}\n\\hline");
     return buffer.toString();
