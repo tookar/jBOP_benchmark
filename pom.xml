@@ -6,7 +6,7 @@
   <artifactId>jbop_benchmark</artifactId>
   <packaging>jar</packaging>
   <name>jBOP Benchmark</name>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <properties>
     <jBOP.version>1.0.0</jBOP.version>
