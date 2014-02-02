@@ -10,20 +10,20 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizer;
 import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 import de.tuberlin.uebb.jbop.optimizer.var.LocalVarInliner;
 
-public class SimpleLocalVarBenchmark extends AbstractBenchmark {
+public class SimpleLocalVarBenchmark extends AbstractBenchmark<Double> {
   
   @Override
-  public double run() {
+  public Double run() {
     double local = 1.0;
     local = 2.0;
     local = 3.0;
     return local;
   }
   
-  public static final class Factory implements IBenchmarkFactory {
+  public static final class Factory implements IBenchmarkFactory<Double> {
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Double> create() {
       return new SimpleLocalVarBenchmark();
     }
     

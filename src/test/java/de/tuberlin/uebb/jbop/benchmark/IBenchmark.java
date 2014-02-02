@@ -1,6 +1,6 @@
 package de.tuberlin.uebb.jbop.benchmark;
 
-public interface IBenchmark {
+public interface IBenchmark<t> {
   
-  public double run();
+  public t run();
 }

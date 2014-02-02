@@ -10,10 +10,10 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizer;
 import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 import de.tuberlin.uebb.jbop.optimizer.loop.ForLoopUnroller;
 
-public class SimpleLoopBenchmark extends AbstractBenchmark {
+public class SimpleLoopBenchmark extends AbstractBenchmark<Double> {
   
   @Override
-  public double run() {
+  public Double run() {
     double d = 1.0;
     for (int i = 0; i < 100; ++i) {
       d += d;
@@ -21,10 +21,10 @@ public class SimpleLoopBenchmark extends AbstractBenchmark {
     return d;
   }
   
-  public static final class Factory implements IBenchmarkFactory {
+  public static final class Factory implements IBenchmarkFactory<Double> {
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Double> create() {
       return new SimpleLoopBenchmark();
     }
     

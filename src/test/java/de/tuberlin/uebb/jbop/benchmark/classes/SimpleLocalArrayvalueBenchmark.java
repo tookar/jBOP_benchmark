@@ -11,7 +11,7 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 import de.tuberlin.uebb.jbop.optimizer.annotations.ImmutableArray;
 import de.tuberlin.uebb.jbop.optimizer.array.FieldArrayValueInliner;
 
-public class SimpleLocalArrayvalueBenchmark extends AbstractBenchmark {
+public class SimpleLocalArrayvalueBenchmark extends AbstractBenchmark<Double> {
   
   @ImmutableArray
   private final double[][] doubleField;
@@ -22,15 +22,15 @@ public class SimpleLocalArrayvalueBenchmark extends AbstractBenchmark {
   }
   
   @Override
-  public double run() {
+  public Double run() {
     final double[] doubleLocal = doubleField[0];
     return doubleLocal[0] + doubleLocal[1] + doubleLocal[2] + doubleLocal[3] + doubleLocal[4] + doubleLocal[5];
   }
   
-  public static final class Factory implements IBenchmarkFactory {
+  public static final class Factory implements IBenchmarkFactory<Double> {
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Double> create() {
       return new SimpleLocalArrayvalueBenchmark(new double[][] {
         {
             123.4, 234.5, 345.6, 456.7, 567.8, 678.9

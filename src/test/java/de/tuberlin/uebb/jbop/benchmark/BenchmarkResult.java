@@ -19,10 +19,10 @@ public class BenchmarkResult {
   private final StringTable tableCreate = new StringTable();
   private final StringTable tableTotal = new StringTable();
   private final StringTable tableRatio = new StringTable();
-  private final IBenchmarkFactory factory;
+  private final IBenchmarkFactory<?> factory;
   private boolean isLatex;
   
-  public BenchmarkResult(final IBenchmarkFactory factory) {
+  public BenchmarkResult(final IBenchmarkFactory<?> factory) {
     this.factory = factory;
     tableRun.setDebug(true);
     tableRun.addColumn("Iterationen", "%,15d");
@@ -33,8 +33,8 @@ public class BenchmarkResult {
     tableRun.setCaption(factory.getCaption() + ": Laufzeit von normaler und optimierter Ausführung");
     
     tableCreate.addColumn("Iterationen", "%,15d");
-    tableCreate.addColumn("Erzeugung", "%,15d");
-    tableCreate.addColumn("Optimierung", "%,15d");
+    // tableCreate.addColumn("Erzeugung", "%,15d");
+    // tableCreate.addColumn("Optimierung", "%,15d");
     tableCreate.setLabel(factory.getLabel() + ".create");
     tableCreate.setShortCaption(factory.getCaption());
     tableCreate.setCaption(factory.getCaption() + ": Instanziierungs- und Optimierungszeit");
@@ -47,27 +47,27 @@ public class BenchmarkResult {
     tableTotal.setCaption(factory.getCaption() + ": totale Laufzeit (erzeugung und Ausführung)");
     
     tableRatio.addColumn("Iterationen", "%,15d");
-    tableRatio.addColumn("Laufzeit", "%,15.9f");
-    tableRatio.addColumn("Erzeugung / Optimierung", "%,15.9f");
+    // tableRatio.addColumn("Laufzeit", "%,15.9f");
+    // tableRatio.addColumn("Erzeugung / Optimierung", "%,15.9f");
     tableRatio.addColumn("Ausführung", "%,15.9f");
     tableRatio.setLabel(factory.getLabel() + ".ratio");
-    tableRatio.setCaption(factory.getCaption() + ": Verhältnis");
+    tableRatio.setCaption(factory.getCaption() + ": Speedup");
   }
   
   private void add(final StringBuilder builder, final String lx, final String ly, final boolean logy,
       final boolean logx, final StringTable... tables) {
-    if ((tables == null) || (tables.length < 1)) {
+    if (tables == null || tables.length < 1) {
       return;
     }
     
     final AbstractPlot plot = TRANSFORMER.transform(tables[0]);
     plot.setLogy(logy);
     plot.setLogx(logx);
-    if (tables.length == 1) {
-      builder.append(tables[0].toString());
-    } else {
-      builder.append(StringTable.merge(tables[0], tables[1]).toString());
-    }
+    // if (tables.length == 1) {
+    // builder.append(tables[0].toString());
+    // } else {
+    // builder.append(StringTable.merge(tables[0], tables[1]).toString());
+    // }
     builder.append("\n\n");
     builder.append(plot.getTikzPicture(lx, ly));
   }
@@ -75,14 +75,14 @@ public class BenchmarkResult {
   @Override
   public String toString() {
     final StringBuilder result = new StringBuilder();
-    result.append("\\FloatBarrier\n");
-    result.append("\n\n");
-    result.append("\\cref{tab:").append(factory.getLabel()).append(".run}\n");
-    result.append("\\cref{tab:").append(factory.getLabel()).append(".merged}\n");
-    result.append("\\cref{fig:").append(factory.getLabel()).append(".run}\n");
-    result.append("\\cref{fig:").append(factory.getLabel()).append(".merged}\n");
-    result.append("\\cref{fig:").append(factory.getLabel()).append(".ratio}\n");
-    result.append("\n\n");
+    // result.append("\\FloatBarrier\n");
+    // result.append("\n\n");
+    // result.append("\\cref{tab:").append(factory.getLabel()).append(".run}\n");
+    // result.append("\\cref{tab:").append(factory.getLabel()).append(".merged}\n");
+    // result.append("\\cref{fig:").append(factory.getLabel()).append(".run}\n");
+    // result.append("\\cref{fig:").append(factory.getLabel()).append(".merged}\n");
+    // result.append("\\cref{fig:").append(factory.getLabel()).append(".ratio}\n");
+    // result.append("\n\n");
     
     add(result, LABEL_LOOPS, LABEL_TIME, true, true, tableRun);
     result.append("\n\n");
@@ -96,7 +96,7 @@ public class BenchmarkResult {
     final StringTable merged = StringTable.merge(tableCreate, tableTotal);
     merged.setLabel(factory.getLabel() + ".merged");
     merged.setShortCaption(factory.getCaption());
-    merged.setCaption(factory.getCaption() + ": Instanziierung / Optimierung sowie komplette Laufzeit");
+    merged.setCaption(factory.getCaption() + ": komplette Laufzeit");
     return merged;
   }
   
@@ -105,14 +105,14 @@ public class BenchmarkResult {
     final long total = timeRunNormal + timeCreate;
     final long totalOpt = timeRunOptimized + timeOptimize;
     
-    final double rateCreate = (double) timeOptimize / (double) timeCreate;
-    final double rateRun = (double) timeRunOptimized / (double) timeRunNormal;
+    // final double rateCreate = (double) timeOptimize / (double) timeCreate;
+    // final double rateRun = (double) timeRunOptimized / (double) timeRunNormal;
     final double rateTotal = (double) totalOpt / (double) total;
     final int iterationen = (int) Math.pow(10, durchlauf);
     tableTotal.addRow(iterationen, total, totalOpt);
     tableRun.addRow(iterationen, timeRunNormal, timeRunOptimized);
-    tableCreate.addRow(iterationen, timeCreate, timeOptimize);
-    tableRatio.addRow(iterationen, rateRun, rateCreate, rateTotal);
+    tableCreate.addRow(iterationen/* , timeCreate, timeOptimize */);
+    tableRatio.addRow(iterationen, /* rateRun, rateCreate, */rateTotal);
   }
   
   public void setLatex(final boolean isLatex) {

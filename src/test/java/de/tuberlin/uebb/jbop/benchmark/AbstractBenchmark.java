@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public abstract class AbstractBenchmark implements IBenchmark, Comparable<IBenchmark> {
+public abstract class AbstractBenchmark<t> implements IBenchmark<t>, Comparable<IBenchmark<t>> {
   
   @Override
   public int hashCode() {
@@ -17,7 +17,7 @@ public abstract class AbstractBenchmark implements IBenchmark, Comparable<IBench
   }
   
   @Override
-  public int compareTo(final IBenchmark o) {
+  public int compareTo(final IBenchmark<t> o) {
     return CompareToBuilder.reflectionCompare(this, o);
   }
 }

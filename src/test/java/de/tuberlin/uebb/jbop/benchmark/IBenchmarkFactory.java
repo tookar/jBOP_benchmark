@@ -2,9 +2,9 @@ package de.tuberlin.uebb.jbop.benchmark;
 
 import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 
-public interface IBenchmarkFactory {
+public interface IBenchmarkFactory<t> {
   
-  IBenchmark create();
+  IBenchmark<t> create();
   
   IOptimizerSuite getOptimizer();
   

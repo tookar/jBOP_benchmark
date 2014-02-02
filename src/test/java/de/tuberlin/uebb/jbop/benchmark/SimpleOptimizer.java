@@ -68,4 +68,9 @@ public class SimpleOptimizer implements IOptimizerSuite {
       canOptimize = optimized;
     }
   }
+  
+  // @Override
+  // public OptimizerStatistic getStats() {
+  // return null;
+  // }
 }

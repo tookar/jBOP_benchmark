@@ -13,7 +13,7 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 
 public class DSBenchmarkRunner {
   
-  private final class DSBenchmark implements IBenchmarkFactory {
+  private final class DSBenchmark implements IBenchmarkFactory<Object> {
     
     @Override
     public IOptimizerSuite getOptimizer() {
@@ -31,14 +31,14 @@ public class DSBenchmarkRunner {
     }
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Object> create() {
       return null;
     }
   }
   
   public static void main(final String[] args) {
     final BenchmarkResultDS result = new DSBenchmarkRunner().run();
-    final File parent = new File("/mnt/D/uni/diplom/tex");
+    final File parent = new File("/mnt/D/uni/diplom/tmp/tex");
     try {
       result.store(parent);
     } catch (final IOException e) {
@@ -51,7 +51,7 @@ public class DSBenchmarkRunner {
   }
   
   public BenchmarkResultDS benchmark() {
-    final IBenchmarkFactory factory = new DSBenchmark();
+    final IBenchmarkFactory<?> factory = new DSBenchmark();
     final BenchmarkResultDS result = new BenchmarkResultDS(factory);
     final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
     
@@ -83,10 +83,16 @@ public class DSBenchmarkRunner {
     final long timeOnly = endOnly - startOnly;
     
     final int cycles = (int) Math.pow(10, i);
-    final long timeRunNormal = run(exampleOrig, cycles, bean);
-    final long timeRunOptimized = run(exampleOpt, cycles, bean);
-    final long timeRunOnly = run(exampleOnly, cycles, bean);
+    final long timeRunNormal1 = run(exampleOrig, cycles, bean);
+    final long timeRunOptimized1 = run(exampleOpt, cycles, bean);
+    final long timeRunOnly1 = run(exampleOnly, cycles, bean);
+    final long timeRunOnly2 = run(exampleOnly, cycles, bean);
+    final long timeRunOptimized2 = run(exampleOpt, cycles, bean);
+    final long timeRunNormal2 = run(exampleOrig, cycles, bean);
     
+    final long timeRunNormal = (timeRunNormal1 + timeRunNormal2) / 2;
+    final long timeRunOptimized = (timeRunOptimized1 + timeRunOptimized2) / 2;
+    final long timeRunOnly = (timeRunOnly1 + timeRunOnly2) / 2;
     result.addResults(i, timeCreate, timeOptimize, timeOnly, timeRunNormal, timeRunOptimized, timeRunOnly);
   }
   
@@ -100,8 +106,8 @@ public class DSBenchmarkRunner {
       }
     }
     final long endRunNormal = bean.getCurrentThreadCpuTime();
-    return (BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))).divide(
-        BigDecimal.valueOf(iterations)).longValue();
+    return BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))
+        .divide(BigDecimal.valueOf(iterations)).longValue();
   }
   
   private long run(final DSExampleOrig benchmark, final int cycles, final ThreadMXBean bean) {
@@ -114,8 +120,8 @@ public class DSBenchmarkRunner {
       }
     }
     final long endRunNormal = bean.getCurrentThreadCpuTime();
-    return (BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))).divide(
-        BigDecimal.valueOf(iterations)).longValue();
+    return BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))
+        .divide(BigDecimal.valueOf(iterations)).longValue();
   }
   
   private long run(final DSExampleOnlyCompose benchmark, final int cycles, final ThreadMXBean bean) {
@@ -128,7 +134,7 @@ public class DSBenchmarkRunner {
       }
     }
     final long endRunNormal = bean.getCurrentThreadCpuTime();
-    return (BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))).divide(
-        BigDecimal.valueOf(iterations)).longValue();
+    return BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))
+        .divide(BigDecimal.valueOf(iterations)).longValue();
   }
 }

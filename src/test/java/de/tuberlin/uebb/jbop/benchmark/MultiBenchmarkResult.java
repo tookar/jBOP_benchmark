@@ -14,14 +14,14 @@ public class MultiBenchmarkResult {
   
   private final List<BenchmarkResult> results = new ArrayList<>();
   private final List<String> includes = new ArrayList<>();
-  private final Map<IBenchmarkFactory, Throwable> errors = new HashMap<IBenchmarkFactory, Throwable>();
+  private final Map<IBenchmarkFactory<?>, Throwable> errors = new HashMap<IBenchmarkFactory<?>, Throwable>();
   
   public void addResult(final BenchmarkResult result) {
     results.add(result);
     includes.add(result.getInclude());
   }
   
-  public void addError(final IBenchmarkFactory factory, final Throwable error) {
+  public void addError(final IBenchmarkFactory<?> factory, final Throwable error) {
     errors.put(factory, error);
   }
   
@@ -33,7 +33,7 @@ public class MultiBenchmarkResult {
     return StringUtils.join(includes, "\n");
   }
   
-  public Map<IBenchmarkFactory, Throwable> getErrors() {
+  public Map<IBenchmarkFactory<?>, Throwable> getErrors() {
     return Collections.unmodifiableMap(errors);
   }
   

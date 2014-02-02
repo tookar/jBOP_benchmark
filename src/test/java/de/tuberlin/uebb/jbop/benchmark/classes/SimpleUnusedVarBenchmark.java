@@ -10,11 +10,11 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizer;
 import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 import de.tuberlin.uebb.jbop.optimizer.var.RemoveUnusedLocalVars;
 
-public class SimpleUnusedVarBenchmark extends AbstractBenchmark {
+public class SimpleUnusedVarBenchmark extends AbstractBenchmark<Double> {
   
   @SuppressWarnings("unused")
   @Override
-  public double run() {
+  public Double run() {
     final double local1 = 1.0;
     final double local2 = 1.0;
     final double local3 = 1.0;
@@ -24,10 +24,10 @@ public class SimpleUnusedVarBenchmark extends AbstractBenchmark {
     return 1.0;
   }
   
-  public static final class Factory implements IBenchmarkFactory {
+  public static final class Factory implements IBenchmarkFactory<Double> {
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Double> create() {
       return new SimpleUnusedVarBenchmark();
     }
     
