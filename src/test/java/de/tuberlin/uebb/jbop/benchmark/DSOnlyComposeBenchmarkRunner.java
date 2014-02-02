@@ -12,7 +12,7 @@ import de.tuberlin.uebb.jbop.optimizer.IOptimizerSuite;
 
 public class DSOnlyComposeBenchmarkRunner {
   
-  private final class DSBenchmark implements IBenchmarkFactory {
+  private final class DSBenchmark implements IBenchmarkFactory<Object> {
     
     @Override
     public IOptimizerSuite getOptimizer() {
@@ -30,7 +30,7 @@ public class DSOnlyComposeBenchmarkRunner {
     }
     
     @Override
-    public IBenchmark create() {
+    public IBenchmark<Object> create() {
       return null;
     }
   }
@@ -50,7 +50,7 @@ public class DSOnlyComposeBenchmarkRunner {
   }
   
   public BenchmarkResult benchmark() {
-    final IBenchmarkFactory factory = new DSBenchmark();
+    final IBenchmarkFactory<?> factory = new DSBenchmark();
     final BenchmarkResult result = new BenchmarkResult(factory);
     final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
     
@@ -92,8 +92,8 @@ public class DSOnlyComposeBenchmarkRunner {
       }
     }
     final long endRunNormal = bean.getCurrentThreadCpuTime();
-    return (BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))).divide(
-        BigDecimal.valueOf(iterations)).longValue();
+    return BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))
+        .divide(BigDecimal.valueOf(iterations)).longValue();
   }
   
   private long run(final DSExampleOrig benchmark, final int cycles, final ThreadMXBean bean) {
@@ -106,7 +106,7 @@ public class DSOnlyComposeBenchmarkRunner {
       }
     }
     final long endRunNormal = bean.getCurrentThreadCpuTime();
-    return (BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))).divide(
-        BigDecimal.valueOf(iterations)).longValue();
+    return BigDecimal.valueOf(endRunNormal).subtract(BigDecimal.valueOf(startRunNormal))
+        .divide(BigDecimal.valueOf(iterations)).longValue();
   }
 }
